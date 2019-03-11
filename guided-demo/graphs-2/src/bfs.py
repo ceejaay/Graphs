@@ -75,6 +75,34 @@ class Graph:
                 stack.pop(0)
         print(visited)
 
+    def depth_first_path(self, start, end):
+        stack = [[0]]
+        path = set()
+        while len(stack) > 0:
+            if stack[0] not in path:
+                # we copy the path.
+                path.add(stack[0])
+                for v in self.vertices[stack[-1]]:
+                    path_copy = stack[0]
+                    path_copy.append[v]
+                    stack.insert(0, path_copy)
+
+                # path_copy = path[0]
+                # path_copy.append(stack[0])
+                # path.insert(0, path_copy)
+                print('path', path)
+                # Then append the latest vertex
+
+                temp_array = path[0]
+                temp_array.append(stack[0])
+
+                path.add(stack[0])
+                # for v in self.vertices[stack[0]]:
+
+            else:
+                stack.pop(0)
+
+
 
                     # print('after putting edge in stack: ', stack)
 
@@ -97,4 +125,5 @@ class Graph:
 
 g = Graph()
 # g.bf_traverse('1')
-g.df_traverse('1')
+# g.df_traverse('1')
+g.depth_first_path('1', '6')
