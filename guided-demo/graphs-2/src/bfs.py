@@ -58,6 +58,19 @@ class Graph:
             print(f'VISITED: {queue[0]}')
         visited.add(queue.pop(0))
 
+    def breadth_first_path(self, start, end):
+        queue = [start]
+        visited = set()
+        path = []
+        while len(queue) > 0:
+            for v in self.vertices[queue[0]]:
+                if v not in queue and v not in visited:
+                    queue.append(v)
+            print('q: ', queue)
+            print(f'VISITED: {queue[0]}')
+            print('path: ', path)
+            visited.add(queue.pop(0))
+
     def df_traverse(self, start):
         # start a stack
         stack = [start]
@@ -126,4 +139,5 @@ class Graph:
 g = Graph()
 # g.bf_traverse('1')
 # g.df_traverse('1')
-g.depth_first_path('1', '6')
+g.breadth_first_path('1', '9')
+# g.depth_first_path('1', '6')
