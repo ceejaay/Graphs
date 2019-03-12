@@ -107,20 +107,30 @@ class SocialGraph:
             # vertex is an array
             vertex = que.pop()
             # print('vertex', vertex[-1])
+            # check for vertex in the visited dict
             if str(vertex[-1]) not in visited:
+                # if not in there go through each connection
+                # visited[str(vertex[0])] = vertex + [item] 
+                visited[str(vertex[0])] = None
                 for item in self.friendships[vertex[-1]]:
-                    # print(f'{item}: is friends with {vertex[-1]}')
-                    # print('que', que)
-                    # print('visited', visited)
-                    # adding the path to the queue
-                    que.insert(0, vertex + [item])
+                    # visited[str(vertex[0])] = vertex + [item] 
 
-                visited[str(vertex[-1])] = que 
+                    que.insert(0, vertex + [item])
+                    print('que', que)
+                    visited[vertex[-1]] = vertex + [item]
+                    print('visited', visited)
+                    # que.append(vertex + [item])
+                    # print(f'{item}: is friends with {vertex[-1]}')
+                    # adding the path to the queue
+                    
+
+                    # print('vertex plus item', vertex + [item])
+                    # visited[str(vertex[0])] = vertex + [item] 
 
                 # print('user', self.friendships[vertex[-1]])
                 # print('not here')
             else:
-                vertex = que.pop()
+                vertex = que.pop(0)
                 # print('it here')
 
 
@@ -132,27 +142,6 @@ class SocialGraph:
 
                 # I think the path gets added to the
                 # visited[str(vertex)] = path
-
-
-
-
-
-        # so if userID 1's connections are this: {3, 4, 5}
-        # then the entry in the dict will look like this. {'3': [1]} <= this one looks like this because there is only one connection between 3 and 1
-
-        # then add the connections to the stack. Along with the path.
-
-
-
-            # how to check if in visited
-        # Takes a user's userID as an argument
-
-        # Returns a dictionary containing every user in that user's
-        # extended network with the shortest friendship path between them.
-
-        # The key is the friend's ID and the value is the path.
-
-        
         return visited
 
 
