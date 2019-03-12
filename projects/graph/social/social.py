@@ -96,22 +96,69 @@ class SocialGraph:
         # Create friendships
 
     def getAllSocialPaths(self, userID):
-        """
-        Takes a user's userID as an argument
+        # use a queue
+        que = [[userID]]
+        # print('stack', stack)
+        # if userID is 1
+        # 5: 4, 3, 2, 1
+        visited = {}
 
-        Returns a dictionary containing every user in that user's
-        extended network with the shortest friendship path between them.
+        while len(que) > 0:
+            # vertex is an array
+            vertex = que.pop()
+            # print('vertex', vertex[-1])
+            if str(vertex[-1]) not in visited:
+                for item in self.friendships[vertex[-1]]:
+                    # print(f'{item}: is friends with {vertex[-1]}')
+                    # print('que', que)
+                    # print('visited', visited)
+                    # adding the path to the queue
+                    que.insert(0, vertex + [item])
 
-        The key is the friend's ID and the value is the path.
-        """
-        visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+                visited[str(vertex[-1])] = que 
+
+                # print('user', self.friendships[vertex[-1]])
+                # print('not here')
+            else:
+                vertex = que.pop()
+                # print('it here')
+
+
+
+
+                    # path = path + [item]
+                    # stack.append(path)
+                # stack.insert.append(path)
+
+                # I think the path gets added to the
+                # visited[str(vertex)] = path
+
+
+
+
+
+        # so if userID 1's connections are this: {3, 4, 5}
+        # then the entry in the dict will look like this. {'3': [1]} <= this one looks like this because there is only one connection between 3 and 1
+
+        # then add the connections to the stack. Along with the path.
+
+
+
+            # how to check if in visited
+        # Takes a user's userID as an argument
+
+        # Returns a dictionary containing every user in that user's
+        # extended network with the shortest friendship path between them.
+
+        # The key is the friend's ID and the value is the path.
+
+        
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(10, 2)
+    sg.populateGraph(7, 2)
     print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
     print(connections)
