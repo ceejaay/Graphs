@@ -1,4 +1,4 @@
-
+import random
 
 class User:
     def __init__(self, name):
@@ -44,6 +44,51 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
+        for i  in range(numUsers):
+            self.addUser(f'Friend #{i+1}')
+
+        # create friendships
+        friendships = []
+        friends_left = numUsers * avgFriendships
+        total_friends = numUsers * avgFriendships
+
+        for i in range(numUsers):
+            if friends_left > 0:
+                friends = round(random.random() * (avgFriendships * 2))
+                print('friends', friends)
+                friends_left -= friends
+                friendships.append(friends)
+            elif friends <= 0:
+                friendships.append(0)
+
+        while sum(friendships) < total_friends:
+            print('adding more')
+            for i in range(len(friendships)):
+                if friends_left:
+                    friendships[i] += 1
+                    friends_left -= 1
+
+        while sum(friendships) > total_friends:
+            print('taking away')
+            for k in range(len(friendships)):
+                if friends_left:
+                    friendships[k] -= 1
+                    friends_left += 1
+
+        for user in self.users:
+            if len(friendships) > user-1:
+                if friendships[user-1]:
+                    for new_friend_index in range(len(friendships)):
+                        if friendships[new_friend_index] == friendships[user-1]:
+                            pass
+                        elif friendships[new_friend_index] and friendships[user-1]:
+                            self.addFriendship(user, new_friend_index+1)
+                            friendships[new_friend_index] -= 1
+                            friendships[user-1] -= 1
+
+
+
+
         # !!!! IMPLEMENT ME
 
         # Add users
