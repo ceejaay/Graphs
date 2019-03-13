@@ -85,19 +85,38 @@ class SocialGraph:
         # Create friendships
 
     def getAllSocialPaths(self, userID):
+        # create a queue
         q = Queue()
+        # the starting list
         initial_list = [userID]
+        # the visited dict
         visited = {}
+        # put the first list in the queue
         q.enqueue(initial_list)
+        # go through the loop
         while q.size() > 0:
+            print('queue', q.queue)
+            # pop out the path
             path = q.dequeue()
+            # designate the new id
             newID = path[-1]
+            # check if the new id is in visited
             if newID not in visited:
+                # if it's not then add it with the current path
+                # [1, 5]
+                # newID = 1
+                # path = [1]
+                # [1, 5]
                 visited[newID] = path
+                # go through the id's friend connections
                 for friendID in self.friendships[newID]:
+                    # set the new path to a new list including the old path
                     new_path = list(path)
+                    # add the id that is in the list of connections to the current friend
                     new_path.append(friendID)
+                    # add the new path to the queue
                     q.enqueue(new_path)
+        # return the visited dict
         return visited
 
 
