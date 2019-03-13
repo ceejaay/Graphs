@@ -150,6 +150,6 @@ class Graph:
 
 g = Graph()
 # g.bf_traverse('1')
-# g.df_traverse('1')
-g.breadth_first_path('1', '9')
+g.df_traverse('1')
+# g.breadth_first_path('1', '9')
 # g.depth_first_path('1', '6')

@@ -2,6 +2,8 @@ from room import Room
 from player import Player
 from world import World
 from rooms_graph import roomGraph
+from print_room import printRooms
+from queue import Queue
 
 import random
 
@@ -11,7 +13,6 @@ world = World()
 # You may uncomment the smaller graphs for development and testing purposes.
 
 
-
 # 
 # 
 
@@ -19,8 +20,21 @@ world = World()
 world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 
+# world.printRooms()
 # FILL THIS IN
+# printRooms(roomGraph)
+# first_item = roomGraph[1][1]
+# print('first[] item', first_item)
 
+
+# for k, v in thing.items():
+#     print(k, v)
+
+
+print('current room id', player.currentRoom.id)
+print('current travel', player.travel('n'))
+print('current room id', player.currentRoom.id)
+print('current room exits', player.currentRoom.getExits())
 
 traversalPath = ['n', 'e']
 
