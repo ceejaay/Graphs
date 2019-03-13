@@ -1,5 +1,18 @@
 import random
 
+class Queue():
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, value):
+        self.queue.append(value)
+
+    def dequeue(self):
+        return self.queue.pop(0)
+
+    def size(self):
+        return len(self.queue)
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -44,47 +57,23 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        for i  in range(numUsers):
-            self.addUser(f'Friend #{i+1}')
-
-        # create friendships
-        friendships = []
-        friends_left = numUsers * avgFriendships
-        total_friends = numUsers * avgFriendships
-
         for i in range(numUsers):
-            if friends_left > 0:
-                friends = round(random.random() * (avgFriendships * 2))
-                print('friends', friends)
-                friends_left -= friends
-                friendships.append(friends)
-            elif friends <= 0:
-                friendships.append(0)
+            self.addUser(f"User {i+1}")
 
-        while sum(friendships) < total_friends:
-            print('adding more')
-            for i in range(len(friendships)):
-                if friends_left:
-                    friendships[i] += 1
-                    friends_left -= 1
+        # Create friendships
+        possibleFriendships = []
+        for userID in self.users:
+            for friendID in range(userID + 1, self.lastID + 1):
+                possibleFriendships.append( (userID, friendID) )
+        print(possibleFriendships)
+        random.shuffle(possibleFriendships)
+        print(possibleFriendships)
 
-        while sum(friendships) > total_friends:
-            print('taking away')
-            for k in range(len(friendships)):
-                if friends_left:
-                    friendships[k] -= 1
-                    friends_left += 1
+        for friendship in possibleFriendships[: (numUsers * avgFriendships) // 2 ]:
+            print(f"CREATING FRIENDSHIP: {friendship}")
+            self.addFriendship(friendship[0], friendship[1]) 
 
-        for user in self.users:
-            if len(friendships) > user-1:
-                if friendships[user-1]:
-                    for new_friend_index in range(len(friendships)):
-                        if friendships[new_friend_index] == friendships[user-1]:
-                            pass
-                        elif friendships[new_friend_index] and friendships[user-1]:
-                            self.addFriendship(user, new_friend_index+1)
-                            friendships[new_friend_index] -= 1
-                            friendships[user-1] -= 1
+
 
 
 
@@ -96,52 +85,19 @@ class SocialGraph:
         # Create friendships
 
     def getAllSocialPaths(self, userID):
-        # use a queue
-        que = [[userID]]
-        # print('stack', stack)
-        # if userID is 1
-        # 5: 4, 3, 2, 1
+        q = Queue()
+        initial_list = [userID]
         visited = {}
-
-        while len(que) > 0:
-            # vertex is an array
-            vertex = que.pop()
-            # print('vertex', vertex[-1])
-            # check for vertex in the visited dict
-            if str(vertex[-1]) not in visited:
-                # if not in there go through each connection
-                # visited[str(vertex[0])] = vertex + [item] 
-                visited[str(vertex[0])] = None
-                for item in self.friendships[vertex[-1]]:
-                    # visited[str(vertex[0])] = vertex + [item] 
-
-                    que.insert(0, vertex + [item])
-                    print('que', que)
-                    visited[vertex[-1]] = vertex + [item]
-                    print('visited', visited)
-                    # que.append(vertex + [item])
-                    # print(f'{item}: is friends with {vertex[-1]}')
-                    # adding the path to the queue
-                    
-
-                    # print('vertex plus item', vertex + [item])
-                    # visited[str(vertex[0])] = vertex + [item] 
-
-                # print('user', self.friendships[vertex[-1]])
-                # print('not here')
-            else:
-                vertex = que.pop(0)
-                # print('it here')
-
-
-
-
-                    # path = path + [item]
-                    # stack.append(path)
-                # stack.insert.append(path)
-
-                # I think the path gets added to the
-                # visited[str(vertex)] = path
+        q.enqueue(initial_list)
+        while q.size() > 0:
+            path = q.dequeue()
+            newID = path[-1]
+            if newID not in visited:
+                visited[newID] = path
+                for friendID in self.friendships[newID]:
+                    new_path = list(path)
+                    new_path.append(friendID)
+                    q.enqueue(new_path)
         return visited
 
 
