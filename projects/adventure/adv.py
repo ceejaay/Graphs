@@ -30,6 +30,42 @@ player = Player("Name", world.startingRoom)
 # for k, v in thing.items():
 #     print(k, v)
 
+class Mapping:
+    def __init__(self, graph):
+        self.graph = graph
+        self.visited = {}
+        self.start = player.currentRoom.id
+
+    def directions_convert(self, current_room):
+        room_data = {}
+        for item in current_room.getExits():
+            room_data[item] = "?"
+
+        return room_data
+
+    def depth_first_traverse(self):
+        stack = [self.start]
+        while len(stack) > 0:
+            if stack[0] not in self.visited:
+                self.visited[stack[0]] = self.directions_convert(player.currentRoom)
+                print('visited', self.visited)
+        
+
+
+
+
+
+
+
+
+    def breadth_first_search(self):
+        pass
+
+
+m = Mapping(roomGraph)
+m.depth_first_traverse()
+
+
 
 print('current room id', player.currentRoom.id)
 print('current travel', player.travel('n'))
