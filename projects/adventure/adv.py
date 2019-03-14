@@ -48,6 +48,13 @@ class Mapping:
         compass_dir = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e', }
         return compass_dir[direction]
 
+    def add_room_to_visited(self, room):
+        room_data = {}
+        for item in room.getExits():
+            room_data[item] = "?"
+
+        self.visited[room.id] = room_data
+
 
     # def peek_in_room(self, direction):
     #     player.travel(direction)
@@ -71,6 +78,24 @@ class Mapping:
     def depth_first_traverse(self):
         searching = True
         while searching:
+            # cur_room = player.currentRoom
+            # if cur_room.id not in self.visited:
+            #     doors = self.directions_convert(cur_room)
+            #     self.visited[cur_room.id] =  doors
+
+
+            # old_room = cur_room
+            # for k, v in self.visited[cur_room.id].items():
+            #     if v == '?':
+            #         player.travel(k)
+            #         print('old room in visited', self.visited[old_room.id])
+            #         print('current room in visited', self.visited[player.currentRoom.id])
+            #         print(f'traveled from {old_room.id} to {cur_room.id}')
+            #         searching = False
+            #     else:
+            #         searching = False
+            #         return player.currentRoom.id
+             
             # cur_room = player.currentRoom
             # if cur_room.id not in self.visited:
             #     doors = self.directions_convert(cur_room)
