@@ -20,7 +20,7 @@ world = World()
 world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 
-# world.printRooms()
+world.printRooms()
 # FILL THIS IN
 # printRooms(roomGraph)
 # first_item = roomGraph[1][1]
@@ -40,16 +40,63 @@ class Mapping:
         room_data = {}
         for item in current_room.getExits():
             room_data[item] = "?"
-
         return room_data
 
+    def reverse_direction(self, direction):
+        compass_dir = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e', }
+        return compass_dir[direction]
+
+    
+    def peek_in_room(self, direction):
+        player.travel(direction)
+        next_room = player.currentRoom
+        player.travel(self.reverse_dir[direction])
+        return next_room
+
+
+
     def depth_first_traverse(self):
-        stack = [self.start]
+        # add current room to stack
+        stack = [player.currentRoom]
+        # go through the loop
         while len(stack) > 0:
-            if stack[0] not in self.visited:
-                self.visited[stack[0]] = self.directions_convert(player.currentRoom)
+            # pop the item off the stack
+            room = stack.pop(0)
+            print('stack before', stack)
+            print('room id', room.id)
+            # if the id isn't in visited do the things
+            if room.id not in self.visited:
+                # get the doors from the room
+                # convert them to cardinal directions
+                doors = self.directions_convert(room)
+                # add the id and it's doors to the visited list
+                self.visited[room.id] = doors
                 print('visited', self.visited)
-        
+                # add the doors to the stack
+                for k, v in doors.items():
+                    # insert them at the beginning of teh stack
+                    stack.insert(0, self.peek_in_room(k))
+                    # for i in stack:
+                    #     print(i.id)
+            else:
+                stack.pop(0)
+                # pop the top of the stack.
+                # player.travel(stack[0])
+                # player.travel(stack[0])
+            print('stack after', stack)
+
+add a room to the stack.
+check if it's been visited
+if not, add it to visited.
+check for ?marks.
+if there are some add those directions to the stack.
+    When going to a new room.
+    may have to empty the stack and start over in a new room.
+    Treat each room like it has 
+
+
+Check for ? in any of the directions.
+add the first one to the stack.
 
 
 
@@ -67,10 +114,10 @@ m.depth_first_traverse()
 
 
 
-print('current room id', player.currentRoom.id)
-print('current travel', player.travel('n'))
-print('current room id', player.currentRoom.id)
-print('current room exits', player.currentRoom.getExits())
+# print('current room id', player.currentRoom.id)
+# print('current travel', player.travel('n'))
+# print('current room id', player.currentRoom.id)
+# print('current room exits', player.currentRoom.getExits())
 
 traversalPath = ['n', 'e']
 
