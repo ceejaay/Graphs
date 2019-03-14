@@ -37,11 +37,11 @@ class Mapping:
         self.visited = {}
         self.start = player.currentRoom.id
 
-    def directions_convert(self, current_room):
-        room_data = {}
-        for item in current_room.getExits():
-            room_data[item] = "?"
-        return room_data
+    # def directions_convert(self, current_room):
+    #     room_data = {}
+    #     for item in current_room.getExits():
+    #         room_data[item] = "?"
+    #     return room_data
     # {"n": "?"}
 
     def reverse_direction(self, direction):
@@ -76,8 +76,39 @@ class Mapping:
 
 
     def depth_first_traverse(self):
+        # searching is true
         searching = True
+        # set the current room
+        cur_room = player.currentRoom
+        # start searching
         while searching:
+            # if the current room is not in visited
+            if cur_room.id not in self.visited:
+                # add the current room to visited
+                self.add_room_to_visited(cur_room)
+                print('visited', self.visited)
+                # loop through the exits in the current room
+            for k, v in self.visited[cur_room.id].items():
+                print(k, v)
+                # if a room has a ? 
+                if v == '?':
+                    # then travel to that room
+                    player.travel(k)
+                    # change the current room to the room just traveled to
+                    cur_room = player.currentRoom
+                    # print('new room', player.currentRoom.id)
+                    print(f'traveled from {cur_room.id} to {player.currentRoom.id}')
+                    print('visited', self.visited)
+                else:
+                    # if the room has no question marks. then we've reached a dead end????
+                    searching = False
+            # not sure what I'm doing here
+            searching = False
+
+
+
+
+            
             # cur_room = player.currentRoom
             # if cur_room.id not in self.visited:
             #     doors = self.directions_convert(cur_room)
