@@ -46,11 +46,11 @@ class Mapping:
         compass_dir = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e', }
         return compass_dir[direction]
 
-    
+
     def peek_in_room(self, direction):
         player.travel(direction)
         next_room = player.currentRoom
-        player.travel(self.reverse_dir[direction])
+        player.travel(self.reverse_direction(direction))
         return next_room
 
 
@@ -58,20 +58,28 @@ class Mapping:
     def depth_first_traverse(self):
         # add current room to stack
         stack = [player.currentRoom]
+        print(player.currentRoom)
         # go through the loop
         while len(stack) > 0:
             # pop the item off the stack
             room = stack.pop(0)
-            print('stack before', stack)
-            print('room id', room.id)
+            # if room.id == 0:
+            #     zero_doors = self.directions_convert(room)
+            #     self.visited[room.id] = zero_doors
+            #     for k, v in zero_doors.items():
+            #         stack.insert(0, self.peek_in_room(k))
+
+            # print('stack before', stack)
+            # print('room id', room.id)
             # if the id isn't in visited do the things
             if room.id not in self.visited:
+                # travel to the new room
                 # get the doors from the room
                 # convert them to cardinal directions
                 doors = self.directions_convert(room)
                 # add the id and it's doors to the visited list
                 self.visited[room.id] = doors
-                print('visited', self.visited)
+                # print('visited', self.visited)
                 # add the doors to the stack
                 for k, v in doors.items():
                     # insert them at the beginning of teh stack
@@ -83,20 +91,36 @@ class Mapping:
                 # pop the top of the stack.
                 # player.travel(stack[0])
                 # player.travel(stack[0])
-            print('stack after', stack)
+        # print('stack after', stack)
 
-add a room to the stack.
-check if it's been visited
-if not, add it to visited.
-check for ?marks.
-if there are some add those directions to the stack.
-    When going to a new room.
-    may have to empty the stack and start over in a new room.
-    Treat each room like it has 
+# add a room to the stack.
+# check if it's been visited
+# if not, add it to visited.
+# check for ?marks.
+# if there are some add those directions to the stack.
+#     When going to a new room.
+#     may have to empty the stack and start over in a new room.
+#     Treat each room like it has it's own stack?
 
 
-Check for ? in any of the directions.
-add the first one to the stack.
+# Check for ? in any of the directions.
+# add the first one to the stack.
+
+# start with the first room
+# check the first room. 
+# if it's in visited.
+#     Then do something else.
+
+# if its not. 
+#     Then add it to visited.
+#     add it with it's exits and question marks
+#     then loop through the exits.
+#     peek in the rooms and add those to the stack.
+#     Check the next room in the stack.
+#     if it's in visited. Then go to the next in the stack.
+#         if the room on the stack is not visited. 
+#             travel to the room and repeat.
+
 
 
 
