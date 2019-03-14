@@ -20,7 +20,7 @@ world = World()
 world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 
-world.printRooms()
+# world.printrooms()
 # FILL THIS IN
 # printRooms(roomGraph)
 # first_item = roomGraph[1][1]
@@ -49,14 +49,19 @@ class Mapping:
         return compass_dir[direction]
 
 
-    def peek_in_room(self, direction):
-        player.travel(direction)
-        next_room = player.currentRoom
-        player.travel(self.reverse_direction(direction))
-        return next_room
-    
-    def update_visited(self, direction):
-        pass
+    # def peek_in_room(self, direction):
+    #     player.travel(direction)
+    #     next_room = player.currentRoom
+    #     player.travel(self.reverse_direction(direction))
+    #     return next_room
+
+    def update_room(self, direction):
+        this_room = player.currentRoom
+        if this_room.id in self.visited:
+            print('need to update room')
+        else:
+            print('this room is not in the database')
+
 
     def breadth_first_search(self):
         pass
@@ -64,6 +69,27 @@ class Mapping:
 
 
     def depth_first_traverse(self):
+        searching = True
+        while searching:
+            # cur_room = player.currentRoom
+            # if cur_room.id not in self.visited:
+            #     doors = self.directions_convert(cur_room)
+            #     self.visited[cur_room.id] = doors
+            #     old_room = cur_room
+            #     for k, v in doors.items():
+            #         if v == "?":
+            #             player.travel(k)
+            #             cur_room = player.currentRoom
+            #             print('old_room', old_room.id)
+            #             self.visited[old_room.id][k] = cur_room.id
+            #             print('current room id', cur_room.id)
+
+            #             # self.visited[cur_room.id][self.reverse_direction(k)] = old_room.id
+            #             print('visited', self.visited)
+
+            #     # self.update_room('n')
+            #     searching = False
+
 
         # # add current room to stack which is room id == 0
         # stack = [player.currentRoom]
@@ -207,6 +233,6 @@ else:
 #     cmds = input("-> ").lower().split(" ")
 #     if cmds[0] in ["n", "s", "e", "w"]:
 #         player.travel(cmds[0], True)
-#         # print('reverse direction', m.reverse_direction(cmds[0]))
+#         print('cur room', m.directions_convert(player.currentRoom))
 #     else:
 #         print("I did not understand that command.")
