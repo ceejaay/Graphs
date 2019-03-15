@@ -9,6 +9,7 @@
       2. check the room. See if it is in the visited list.
         * if isn't then add it.
             Add all rooms to visited with their exits
+            get the exits with the player.currentRoom method.
         * if it is then move on to the next step.
       3. Look at all the rooms.
         * is there one with a question mark?

@@ -80,36 +80,82 @@ class Mapping:
         searching = True
         # set the current room
         cur_room = player.currentRoom
+        exit = ''
+
+
+
         # start searching
-        for i in range(5):
         # while searching:
-            # if the current room is not in visited
+        for i in range(2):
             if cur_room.id not in self.visited:
-                # add the current room to visited
                 self.add_room_to_visited(cur_room)
-                print('visited', self.visited)
-                # loop through the exits in the current room
-            print('for loop begins')
-            for k, v in self.visited[cur_room.id].items():
-                print(k, v)
-                # print('visited in the for loop', self.visited[cur_room.id].items())
-                # if a room has a ? 
-                if v == '?':
-                    print('checking for ?')
+
+
+
+
+        # top of loop.
+        # check for current room in visited.
+        # if not add it.
+        # loop through exits.
+        # get an unexplored one.
+        # set current room to old room.
+        # travel
+        # set current room to the new room.
+
+
+        #     if cur_room.id not in self.visited:
+        #         print('visited before', self.visited)
+        #         self.add_room_to_visited(cur_room)
+        #     print('visited ', self.visited )
+        #     exit = None
+            # for k, v in self.visited[cur_room.id].items():
+            #     if v == '?':
+            #         exit = k
+            #     else:
+            #         searching = False
+
+            # print(f'old room: {old_room.id} cur room: { cur_room.id }')
+            old_room = cur_room
+            # print('player loc before', player.currentRoom.id)
+            player.travel(exit)
+            cur_room = player.currentRoom
+
+
+            # searching = False
+
+
+        # # while searching:
+        #     # if the current room is not in visited
+        #     if cur_room.id not in self.visited:
+        #         # add the current room to visited
+        #         self.add_room_to_visited(cur_room)
+        #         print('visited', self.visited)
+        #         # loop through the exits in the current room
+        #     print('for loop begins')
+        #     for k, v in self.visited[cur_room.id].items():
+        #         print(k, v)
+        #         if v == '?':
+        #             exit = v
+
+        #     old_room = cur_room
+        #     print('location before', player.currentRoom.id)
+        #     player.travel(exit)
+        #     print('location after', player.currentRoom.id)
+
+
+                    # print('checking for ?')
                     # then travel to that room
-                    prev_room = cur_room
-                    player.travel(k)
+                    # prev_room = cur_room
+                    # player.travel(k)
                     # change the current room to the room just traveled to
-                    cur_room = player.currentRoom
+                    # cur_room = player.currentRoom
                     # print('new room', player.currentRoom.id)
-                    print(f'traveled from {prev_room.id} to {player.currentRoom.id}')
+                    # print(f'traveled from {prev_room.id} to {player.currentRoom.id}')
                     # print('visited', self.visited)
-                    searching = True
-                else:
-                    print(' after the else')
+                    # searching = True
 
                     # if the room has no question marks. then we've reached a dead end????
-                    searching = False
+                    # searching = False
             # not sure what I'm doing here
             # searching = False
 
@@ -260,10 +306,6 @@ m.depth_first_traverse()
 
 
 
-# print('current room id', player.currentRoom.id)
-# print('current travel', player.travel('n'))
-# print('current room id', player.currentRoom.id)
-# print('current room exits', player.currentRoom.getExits())
 
 
 
