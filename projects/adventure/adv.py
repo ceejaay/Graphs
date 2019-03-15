@@ -71,71 +71,41 @@ class Mapping:
 
 
     def breadth_first_search(self, start):
-        # print('visited 0', '?' in self.visited[0].values())
-        # path only has the id of the room from the dft
-        # path = [start]
         searching = True
-        cur_room = player.currentRoom
-        cur_room_exits = cur_room.getExits()
-        prev_room = None
-        for i in range(5):
-        # while searching:
-            # print('bfs running')
-            # print('cur room', cur_room.id)
-            # print('bfs result', cur_room.id)
-            print(self.visited[cur_room.id])
-            print("?" in self.visited[0].keys())
-            if '?' in self.visited[cur_room.id].values():
-                # go through the existing direction.
-               # find the next place to go
+        cur_room = start
+        q = []
+        # print('visisted', self.visited)
+        q.append(cur_room)
+        # print('q', q)
+        path = []
+        while searching:
+        # for i in range(5):
+            checking = q.pop(0)
+            # print(f'checking {checking} path { path } cur room {player.currentRoom.id}, visited: {self.visited}')
+            if '?' in self.visited[checking].values():
+
+                print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
+                # print(' found one')
+                # print('checking value', checking)
                 searching = False
-                return False
             else:
-                if len(cur_room_exits) <= 1:
-                    print('room before', player.currentRoom.id)
-                    player.travel(cur_room_exits[0])
-                    print('room after', player.currentRoom.id)
-                    prev_room = cur_room
-                    cur_room_exits = cur_room.getExits()
+                for k, v in self.visited[checking].items():
+                    print(f' LOOP => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
+                    print('adding to path', k)
+                    q.append(v)
+                    new_path = list(path)
+                    path.append(k)
+                # print('you should move on')
+                # print('q', q)
+            for thing in path:
+                player.travel(thing)
+                traversalPath.append(thing)
+                # print('player location:', player.currentRoom.id)
 
-                # for item in cur_room_exits:
-                #     print('direction: ', item)
-                    
-                    # if prev_room.id != self.visited[cur_room.id][item]:
-                    #     prev_room = cur_room
-                    #     player.travel[item]
-                    #     traversalPath.append(item)
-                    #     cur_room = player.currentRoom
-                    #     cur_room_exits = cur_room.getExits()
-            # else:
-            #     player.travel(cur_room_exits[0])
-            #     traversalPath.append(cur_room_exits[0])
-            #     cur_room = player.currentRoom
-            #     cur_room_exits = cur_room.getExits()
+        # while len(q) > 0:
 
+        return False
 
-            #     print('looking for ?')
-            #     # print('checking for visitd room')
-            #     searching = False
-            #     # print(f'searching: {searching} cur room: {cur_room.id}')
-            # else:
-            #     return False
-
-            # if prev_room:
-            #     # print('there is a prev room')
-            #     for item in cur_room_exits:
-            #         if prev_room.id != self.visited[cur_room.id][item]:
-            #             prev_room = cur_room
-            #             player.travel[item]
-            #             traversalPath.append(item)
-            #             cur_room = player.currentRoom
-            #             cur_room_exits = cur_room.getExits()
-            # else:
-            #     player.travel(cur_room_exits[0])
-            #     traversalPath.append(cur_room_exits[0])
-            #     cur_room = player.currentRoom
-            #     cur_room_exits = cur_room.getExits()
-        return True
 
     def depth_first_traverse(self):
         # searching is true
@@ -184,7 +154,7 @@ m = Mapping(roomGraph)
 # print('graph length', len(roomGraph) )
 # print('visited', len(m.visited) )
 df = m.depth_first_traverse()
-m.breadth_first_search(df)
+m.breadth_first_search(4)
 # print('room graph length', len(roomGraph))
 # while len(m.visited) < len(roomGraph):
 # # for i in range(13):
