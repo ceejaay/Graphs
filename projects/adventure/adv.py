@@ -71,28 +71,46 @@ class Mapping:
 
 
     def breadth_first_search(self, start):
-        path = [self.visited[start]]
+        path = [start]
         # print(f'bfs path: id: {start}: {path}')
         searching = True
         exit = None
         cur_room = player.currentRoom
+        cur_room_exits = cur_room.getExits()
+        print(cur_room_exits)
+        prev_room = None
         print('cur room', cur_room.id)
         # while searching:
         for i in range(3):
             if "?" in self.visited[cur_room.id].values():
-                print('found a ?')
-                searching = False
-                # return something here
-                # walk the path
-                # keep track of the directions
-            for k, v in self.visited[cur_room.id].items():
-                # have to pick the exit we haven't gone before
-                # have to add to the path
-                new_path = list(path)
-                exit = k
-                print(f'cur room {cur_room.id} exit: { exit }')
-            player.travel(exit)
-            cur_room = player.currentRoom
+                print('found one')
+
+            if prev_room:
+                for item in cur_room_exits:
+
+
+
+            # print('cur room', self.visited[cur_room.id])
+            # if prev_room:
+            #     for k, v in self.visited[cur_room.id].items():
+
+
+
+
+
+            #     print('found a ?')
+            #     searching = False
+            #     # return something here
+            #     # walk the path
+            #     # keep track of the directions
+            # for k, v in self.visited[cur_room.id].items():
+            #     # have to pick the exit we haven't gone before
+            #     # have to add to the path
+            #     new_path = list(path)
+            #     exit = k
+            #     print(f'cur room {cur_room.id} exit: { exit }')
+            # player.travel(exit)
+            # cur_room = player.currentRoom
 
 
         # while searching:

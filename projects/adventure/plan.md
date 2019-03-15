@@ -25,8 +25,18 @@
 
 ### Breadth First Search.
   * this takes in the return from the DFT.
+
   * It returns a path. That the player will walk to get to the nearest room with a question mark
 
+      1. look at the current room or the start.
+          keep track of the current room
+      2. travel the direction that will get to the next room
+          change the current room to the previous room
+      3. check that room. 
+      4. Add the new room to the path.
+      5. If there is a questionmark. 
+      6. Return the path and walk the path.
+      7. add the walking to the traversal list
 
 How to update '?' in the room Dict.
   At the top of the loop.
