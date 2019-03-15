@@ -78,13 +78,13 @@ class Mapping:
         cur_room_exits = cur_room.getExits()
         prev_room = None
         while searching:
-            print('searching')
+            # print('searching')
             # print('traversal', traversalPath)
         # for i in range(3):
             # print('cur room', player.currentRoom.id)
             # print('cur room exits', cur_room_exits)
             if "?" in self.visited[cur_room.id].values():
-                print('found one', cur_room.id)
+                # print('found one', cur_room.id)
                 searching = False
                 return True 
 
@@ -145,12 +145,14 @@ class Mapping:
 
 
 m = Mapping(roomGraph)
-
-searching = True
-while searching:
-    dft = m.depth_first_traverse()
-    searching = m.breadth_first_search(dft)
-
+# print('graph length', len(roomGraph) )
+# print('visited', len(m.visited) )
+for i in range(13):
+    df = m.depth_first_traverse()
+    print('dead end room', df)
+    print('path length', len(traversalPath))
+    m.breadth_first_search(df)
+    print(m.breadth_first_search(df))
 
 
 # TRAVERSAL TEST
