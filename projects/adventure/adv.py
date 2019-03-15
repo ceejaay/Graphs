@@ -70,8 +70,34 @@ class Mapping:
             print('this room is not in the database')
 
 
-    def breadth_first_search(self):
-        pass
+    def breadth_first_search(self, start):
+        path = [self.visited[start]]
+        # print(f'bfs path: id: {start}: {path}')
+        searching = True
+        exit = None
+        cur_room = player.currentRoom
+        print('cur room', cur_room.id)
+        # while searching:
+        for i in range(3):
+            if "?" in self.visited[cur_room.id].values():
+                print('found a ?')
+                searching = False
+                # return something here
+                # walk the path
+                # keep track of the directions
+            for k, v in self.visited[cur_room.id].items():
+                # have to pick the exit we haven't gone before
+                # have to add to the path
+                new_path = list(path)
+                exit = k
+                print(f'cur room {cur_room.id} exit: { exit }')
+            player.travel(exit)
+            cur_room = player.currentRoom
+
+
+        # while searching:
+
+
 
 
 
@@ -85,8 +111,8 @@ class Mapping:
         # start searching
         while searching:
         # for i in range(3):
-            print('visited', self.visited)
-            print(f'cur room {cur_room.id}')
+            # print('visited', self.visited)
+            # print(f'cur room {cur_room.id}')
             if cur_room.id not in self.visited:
                 self.add_room_to_visited(cur_room)
 
@@ -106,12 +132,15 @@ class Mapping:
             self.visited[prev_room.id][exit] = cur_room.id
             self.visited[cur_room.id][self.reverse_direction(exit)] = prev_room.id
             last_room = cur_room.id
-            print('last room', cur_room.id)
-            print('traversal', traversalPath)
-            print('visited', self.visited)
+            # print('last room', cur_room.id)
+            # print('traversal', traversalPath)
+            # print('visited', self.visited)
         return last_room
 
 
+m = Mapping(roomGraph)
+m.depth_first_traverse()
+m.breadth_first_search(4)
 
 
 
@@ -343,8 +372,6 @@ class Mapping:
 
 
 
-m = Mapping(roomGraph)
-m.depth_first_traverse()
 
 
 
