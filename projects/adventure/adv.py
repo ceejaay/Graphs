@@ -105,6 +105,12 @@ class Mapping:
 
             self.visited[prev_room.id][exit] = cur_room.id
             self.visited[cur_room.id][self.reverse_direction(exit)] = prev_room.id
+            last_room = cur_room.id
+            print('last room', cur_room.id)
+            print('traversal', traversalPath)
+            print('visited', self.visited)
+        return last_room
+
 
 
 
