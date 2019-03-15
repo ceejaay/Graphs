@@ -82,32 +82,53 @@ class Mapping:
         cur_room = player.currentRoom
         exit = None
         prev_room = None
-
-
-
         # start searching
-        # while searching:
-        for i in range(3):
-            # print(f'prev room: {prev_room} cur room: {cur_room}')
+        while searching:
+        # for i in range(3):
+            print('visited', self.visited)
+            print(f'cur room {cur_room.id}')
             if cur_room.id not in self.visited:
                 self.add_room_to_visited(cur_room)
 
-            if prev_room and cur_room:
-                print(f'visited cur id: {cur_room.id}: {self.visited[cur_room.id]}', )
-                print(f'visited prev id: {prev_room.id}: {self.visited[prev_room.id]}', )
-                self.visited[prev_room.id][exit] = cur_room.id
-                self.visited[prev_room.id][self.reverse_direction(exit)] = prev_room.id
-            else:
-                print('no prev room')
-
-
+            prev_room = cur_room
             for k, v in self.visited[cur_room.id].items():
                 if v == '?':
                     exit = k
-
-            prev_room = cur_room
+                else:
+                    searching = False
+                    # print(f'out of values')
             player.travel(exit)
+            traversalPath.append(exit)
             cur_room = player.currentRoom
+            if cur_room.id not in self.visited:
+                self.add_room_to_visited(cur_room)
+
+            self.visited[prev_room.id][exit] = cur_room.id
+            self.visited[cur_room.id][self.reverse_direction(exit)] = prev_room.id
+
+
+
+
+            # # print(f'prev room: {prev_room} cur room: {cur_room}')
+            # if cur_room.id not in self.visited:
+            #     self.add_room_to_visited(cur_room)
+
+            # if prev_room and cur_room:
+            #     print(f'visited cur id: {cur_room.id}: {self.visited[cur_room.id]}', )
+            #     print(f'visited prev id: {prev_room.id}: {self.visited[prev_room.id]}', )
+            #     self.visited[prev_room.id][exit] = cur_room.id
+            #     self.visited[prev_room.id][self.reverse_direction(exit)] = prev_room.id
+            # else:
+            #     print('no prev room')
+
+
+            # for k, v in self.visited[cur_room.id].items():
+            #     if v == '?':
+            #         exit = k
+
+            # prev_room = cur_room
+            # player.travel(exit)
+            # cur_room = player.currentRoom
          # top of loop.
         # check for current room in visited.
         # if not add it.
@@ -130,10 +151,10 @@ class Mapping:
             #         searching = False
 
             # print(f'old room: {old_room.id} cur room: { cur_room.id }')
-            old_room = cur_room
-            # print('player loc before', player.currentRoom.id)
-            player.travel(exit)
-            cur_room = player.currentRoom
+            # old_room = cur_room
+            # # print('player loc before', player.currentRoom.id)
+            # player.travel(exit)
+            # cur_room = player.currentRoom
 
 
             # searching = False
