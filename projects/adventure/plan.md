@@ -3,6 +3,8 @@
   * Steps.
       1. start in a new room
           What does the new room look like. How do we get it?
+            * can call player functions to know what exits there are.
+            * ???? 
             * The first go around it is zero.
       2. check the room. See if it is in the visited list.
         * if isn't then add it.
@@ -14,8 +16,11 @@
             if yes. Then move to the next step.
             if No, then I think we've reached a dead end.
       4. Move to the room where you find value is a question mark.
+      5. Then update the previous room's data and the new rooms data in their dictionaries.
+        * To the old room. Add the number of the new room to the direction in the dictionary. ie: 01: { n: 002}
+        * To the new room. Add the number of the old room to the opposite direction of the new room's dictionary. ie 002: {s: 01}
 
-      5. Repeat the above steps until a room with no question marks are found.
+      6. Repeat the above steps until a room with no question marks are found.
 
 ### Breadth First Search.
   * this takes in the return from the DFT.
