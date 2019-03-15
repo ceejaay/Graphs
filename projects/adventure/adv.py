@@ -71,22 +71,40 @@ class Mapping:
 
 
     def breadth_first_search(self, start):
+        # path only has the id of the room from the dft
         path = [start]
-        # print(f'bfs path: id: {start}: {path}')
         searching = True
-        exit = None
         cur_room = player.currentRoom
         cur_room_exits = cur_room.getExits()
-        print(cur_room_exits)
         prev_room = None
-        print('cur room', cur_room.id)
-        # while searching:
-        for i in range(3):
+        while searching:
+        # for i in range(3):
+            print('cur room', player.currentRoom.id)
+            print('cur room exits', cur_room_exits)
             if "?" in self.visited[cur_room.id].values():
-                print('found one')
+                print('found one', cur_room.id)
+                searching = False
 
             if prev_room:
+                print(f'prev room {prev_room.id} cur room { cur_room.id }')
                 for item in cur_room_exits:
+                    if prev_room.id != self.visited[cur_room.id][item]:
+                        print(prev_room.id)
+                        prev_room = cur_room
+                        player.travel[item]
+                        traversalPath.append(item)
+                        cur_room = player.currentRoom
+                        cur_room_exits = cur_room.getExits()
+            else:
+                player.travel(cur_room_exits[0])
+                traversalPath.append(cur_room_exits[0])
+                cur_room = player.currentRoom
+                cur_room_exits = cur_room.getExits()
+
+
+
+            # if prev_room:
+            #     for item in cur_room_exits:
 
 
 
