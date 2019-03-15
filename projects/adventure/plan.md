@@ -26,3 +26,15 @@
 ### Breadth First Search.
   * this takes in the return from the DFT.
   * It returns a path. That the player will walk to get to the nearest room with a question mark
+
+
+How to update '?' in the room Dict.
+  At the top of the loop.
+  if a prev and cur room exist.
+  Then we have the things to swap info
+  Move to new room.
+  keep track of the old room exit
+  keep track of the reversed exit in the new room.
+  When at the top of loop. Use that data to update the key/value in both the rooms .
+
+

@@ -20,7 +20,7 @@ world = World()
 world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 
-# world.printrooms()
+world.printRooms()
 # FILL THIS IN
 # printRooms(roomGraph)
 # first_item = roomGraph[1][1]
@@ -80,20 +80,35 @@ class Mapping:
         searching = True
         # set the current room
         cur_room = player.currentRoom
-        exit = ''
+        exit = None
+        prev_room = None
 
 
 
         # start searching
         # while searching:
-        for i in range(2):
+        for i in range(3):
+            # print(f'prev room: {prev_room} cur room: {cur_room}')
             if cur_room.id not in self.visited:
                 self.add_room_to_visited(cur_room)
 
+            if prev_room and cur_room:
+                print(f'visited cur id: {cur_room.id}: {self.visited[cur_room.id]}', )
+                print(f'visited prev id: {prev_room.id}: {self.visited[prev_room.id]}', )
+                self.visited[prev_room.id][exit] = cur_room.id
+                self.visited[prev_room.id][self.reverse_direction(exit)] = prev_room.id
+            else:
+                print('no prev room')
 
 
+            for k, v in self.visited[cur_room.id].items():
+                if v == '?':
+                    exit = k
 
-        # top of loop.
+            prev_room = cur_room
+            player.travel(exit)
+            cur_room = player.currentRoom
+         # top of loop.
         # check for current room in visited.
         # if not add it.
         # loop through exits.
