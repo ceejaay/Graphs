@@ -65,8 +65,10 @@ class Mapping:
     def travel(self, path):
         destination = path[-1]
         current_room = player.currentRoom.id
-        for i in range(len(path) - 1, 0, -1):
-            print(path[i])
+        for i in range(0, len(path)):
+            print(path[i], i)
+        # for i in range(len(path) - 1, 0, -1):
+        #     print(path[i])
             # for k, v in self.visited[path[i]].items():
             #     # if v == path[i]:
             #     print(f'v: {v}, path number {path[i]}')
