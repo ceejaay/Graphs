@@ -55,13 +55,6 @@ class Mapping:
 
         self.visited[room.id] = room_data
 
-
-    # def peek_in_room(self, direction):
-    #     player.travel(direction)
-    #     next_room = player.currentRoom
-    #     player.travel(self.reverse_direction(direction))
-    #     return next_room
-
     def update_room(self, direction):
         this_room = player.currentRoom
         if this_room.id in self.visited:
@@ -69,35 +62,51 @@ class Mapping:
         else:
             print('this room is not in the database')
 
+    def travel(self, path):
+        destination = path[-1]
+        current_room = player.currentRoom.id
+        for i in range(len(path) - 1, 0, -1):
+            print(path[i])
+            # for k, v in self.visited[path[i]].items():
+            #     # if v == path[i]:
+            #     print(f'v: {v}, path number {path[i]}')
+
+
+
+
+
+
+
+
 
     def breadth_first_search(self, start):
-        searching = True
+        # exit = player.currentRoom.getExits()[0]
+        # next_room = self.visited[start][exit]
         cur_room = start
+        # print(next_room)
         q = []
-        # print('visisted', self.visited)
-        q.append(cur_room)
-        # print('q', q)
-        path = []
-        prev_room = None
+        q.append(start)
+        path = [start]
+        searching = True
         while searching:
         # for i in range(5):
-            print('path', path)
+            # print('path', path)
             checking = q.pop(0)
             # print(f'checking {checking} path { path } cur room {player.currentRoom.id}, visited: {self.visited}')
             if '?' in self.visited[checking].values():
-                print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
+                # print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
                 # print(' found one')
                 # print('checking value', checking)
                 searching = False
-            
             else:
                 for k, v in self.visited[checking].items():
                     # print(k, v)
-                    print(f' LOOP => checking {checking} \n - path { path } \n - q: {q} \n - cur room: {player.currentRoom.id} \n - cur room exits {self.visited[checking]}\n - visited: {self.visited}')
+                    # print(f' LOOP => checking {checking} \n - path { path } \n - q: {q} \n - cur room: {player.currentRoom.id} \n - cur room exits {self.visited[checking]}\n - visited: {self.visited}')
                     # print('adding to path', k)
-                    q.append(v)
-                    new_path = list(path)
-                    path.append(v)
+                    if v != cur_room:
+                        q.append(v)
+                        new_path = list(path)
+                        path.append(v)
                 # print('you should move on')
                 # print('q', q)
             # for thing in path:
@@ -107,7 +116,7 @@ class Mapping:
 
         # while len(q) > 0:
 
-        return False
+        return path
 
 
     def depth_first_traverse(self):
@@ -157,7 +166,10 @@ m = Mapping(roomGraph)
 # print('graph length', len(roomGraph) )
 # print('visited', len(m.visited) )
 df = m.depth_first_traverse()
-m.breadth_first_search(4)
+p = m.breadth_first_search(4)
+# print(m.breadth_first_search(4))
+m.travel(p)
+
 # print('room graph length', len(roomGraph))
 # while len(m.visited) < len(roomGraph):
 # # for i in range(13):
