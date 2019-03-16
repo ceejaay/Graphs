@@ -78,28 +78,29 @@ class Mapping:
         q.append(cur_room)
         # print('q', q)
         path = []
+        prev_room = None
         while searching:
         # for i in range(5):
             checking = q.pop(0)
             # print(f'checking {checking} path { path } cur room {player.currentRoom.id}, visited: {self.visited}')
             if '?' in self.visited[checking].values():
-
-                print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
+                # print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
                 # print(' found one')
                 # print('checking value', checking)
                 searching = False
             else:
                 for k, v in self.visited[checking].items():
-                    print(f' LOOP => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
-                    print('adding to path', k)
+                    print(k, v)
+                    # print(f' LOOP => checking {checking} \n - path { path } \n- q: {q} \n- cur room: {player.currentRoom.id} \n cur room exits {self.visited[checking]}\n- visited: {self.visited}')
+                    # print('adding to path', k)
                     q.append(v)
                     new_path = list(path)
                     path.append(k)
                 # print('you should move on')
                 # print('q', q)
-            for thing in path:
-                player.travel(thing)
-                traversalPath.append(thing)
+            # for thing in path:
+            #     player.travel(thing)
+            #     traversalPath.append(thing)
                 # print('player location:', player.currentRoom.id)
 
         # while len(q) > 0:
