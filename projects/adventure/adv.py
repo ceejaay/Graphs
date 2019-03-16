@@ -81,21 +81,23 @@ class Mapping:
         prev_room = None
         while searching:
         # for i in range(5):
+            print('path', path)
             checking = q.pop(0)
             # print(f'checking {checking} path { path } cur room {player.currentRoom.id}, visited: {self.visited}')
             if '?' in self.visited[checking].values():
-                # print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
+                print(f' FOUND ONE => checking {checking} - path { path } - cur room: {player.currentRoom.id} - visited: {self.visited}')
                 # print(' found one')
                 # print('checking value', checking)
                 searching = False
+            
             else:
                 for k, v in self.visited[checking].items():
-                    print(k, v)
-                    # print(f' LOOP => checking {checking} \n - path { path } \n- q: {q} \n- cur room: {player.currentRoom.id} \n cur room exits {self.visited[checking]}\n- visited: {self.visited}')
+                    # print(k, v)
+                    print(f' LOOP => checking {checking} \n - path { path } \n - q: {q} \n - cur room: {player.currentRoom.id} \n - cur room exits {self.visited[checking]}\n - visited: {self.visited}')
                     # print('adding to path', k)
                     q.append(v)
                     new_path = list(path)
-                    path.append(k)
+                    path.append(v)
                 # print('you should move on')
                 # print('q', q)
             # for thing in path:
