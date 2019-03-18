@@ -176,12 +176,12 @@ class Graph:
 #     print('from set', x[i])
 
 graph = Graph()  # Instantiate your graph
-# print('bf traversal', graph.bf_traverse(0))
-# print('bf search for 14', graph.bf_search(0, 14))
-# print('bf search for 67', graph.bf_search(0, 67))
-# print('bf search for 99', graph.bf_search(0, 99))
-# print('df traversal', graph.df_traverse(0)) # yyp
-# print('dft recursive', graph.dft_recursive(0))
+print('bf traversal', graph.bf_traverse(0))
+print('bf search for 14', graph.bf_search(0, 14))
+print('bf search for 67', graph.bf_search(0, 67))
+print('bf search for 99', graph.bf_search(0, 99))
+print('df traversal', graph.df_traverse(0)) # yyp
+print('dft recursive', graph.dft_recursive(0))
 print('DF search 14', graph.df_search(0, 14))
 print('DF search 67', graph.df_search(0, 67))
 print('DF search 99', graph.df_search(0, 99))
