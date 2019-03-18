@@ -1,4 +1,6 @@
 """
+Think most of this stuff is working.
+
 Simple graph implementation
 """
 
