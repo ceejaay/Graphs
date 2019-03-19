@@ -23,7 +23,7 @@ traversalPath = []
 
 
 
-world.printRooms()
+# world.printRooms()
 
 class Mapping():
     def __init__(self, p):
@@ -45,43 +45,53 @@ class Mapping():
     def df_traverse(self):
         searching = True
         prev_room = False
-        exit = None
-        cur_room = self.player.currentRoom.id
+        exit = 'n' 
+        cur_room = self.player.currentRoom
         loop_number = 0
-        # for i in range(10):
-        while searching:
+        for i in range(3):
+        # while searching:
             loop_number += 1
 
             # print(f'prev room {prev_room} cur room {cur_room}, loop {loop_number}')
             # cur_room = self.player.currentRoom.id
-            if cur_room not in self.visited:
+            if cur_room.id not in self.visited:
                 self.add_room()
 
             if prev_room:
-                # print(f'prev_room id {prev_room}, cur_room { cur_room } loop {loop_number}')
-                print(f'BEFORE prev room id: {prev_room}, exits: {self.visited[prev_room]}, loop: {loop_number}')
-                print(f'BEFORE cur room id: {cur_room}, exits: {self.visited[cur_room]} loop: {loop_number}')
-                self.visited[cur_room][self.direction_swap(exit)] = prev_room
-                self.visited[prev_room][exit] = cur_room
-                print(f'AFTER: prev room id: {prev_room}, exits: {self.visited[prev_room]}, loop: {loop_number}')
-                print(f'AFTER: cur room id: {cur_room}, exits: {self.visited[cur_room]}, loop: {loop_number}')
+                # print(f'prev_room id {prev_room.id}, cur_room { cur_room.id } loop {loop_number}')
+                # print(f'BEFORE prev room id: {prev_room.id}, exits: {self.visited[prev_room.id]}, loop: {loop_number}')
+                # print(f'BEFORE cur room id: {cur_room.id}, exits: {self.visited[cur_room.id]} loop: {loop_number}')
+                self.visited[cur_room.id][self.direction_swap(exit)] = prev_room.id
+                self.visited[prev_room.id][exit] = cur_room.id
+                # print(f'AFTER: prev room id: {prev_room.id}, exits: {self.visited[prev_room.id]}, loop: {loop_number}')
+                # print(f'AFTER: cur room id: {cur_room.id}, exits: {self.visited[cur_room.id]}, loop: {loop_number}')
                 # print('cur room ', cur_room)
 
-            for k, v in self.visited[cur_room].items():
-                if v == '?':
-                    exit = k
-                    # break
-                else:
-                    # print('current room', cur_room)
-                    searching = False
-                    return cur_room
+            if '?' in self.visited[cur_room.id].values():
+                for key, value in self.visited[cur_room.id].items():
+                    if value == '?':
+                        exit = key
+            else:
+                searching = False
+                return cur_room.id
+                print('searching', searching)
+            # for k, v in self.visited[cur_room.id].items():
+            #     if v == '?':
+            #         print(f' cur room: {cur_room.id }, key: {k} value: {v}')
+            #         exit = k
+            #         # break
+            #     else:
+            #         # print('current room after not finding ?', cur_room.id)
+            #         # searching = False
+            #         return cur_room.id
 
 
             prev_room = cur_room
             traversalPath.append(exit)
             self.player.travel(exit)
-            cur_room = self.player.currentRoom.id
-            # print('visited at end', self.visited)
+            cur_room = self.player.currentRoom
+            # print(f'room id {prev_room.id}, rooms {self.visited[prev_room.id]}')
+            print('visited at end', self.visited)
 
 
 
@@ -103,7 +113,8 @@ class Mapping():
 
 
 m = Mapping(player)
-m.df_traverse()
+print('df output', m.df_traverse())
+print('visited after df traverse', m.visited)
 
 
 
