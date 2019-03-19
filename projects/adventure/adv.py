@@ -7,22 +7,10 @@ import random
 
 # Load world
 world = World()
-
-# You may uncomment the smaller graphs for development and testing purposes.
-
-
 world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
-
-
-
-
 # FILL THIS IN
 traversalPath = []
-
-
-
-
 # world.printRooms()
 
 class Mapping():
@@ -41,11 +29,10 @@ class Mapping():
         cardinal_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
         return cardinal_directions[direction]
 
-
     def df_traverse(self):
         searching = True
         prev_room = False
-        exit = 'n' 
+        exit = None
         cur_room = self.player.currentRoom
         while searching:
             if cur_room.id not in self.visited:
@@ -64,12 +51,38 @@ class Mapping():
             traversalPath.append(exit)
             self.player.travel(exit)
             cur_room = self.player.currentRoom
-            # print(f'room id {prev_room.id}, rooms {self.visited[prev_room.id]}')
-            # print('visited at end', self.visited)
+
+    def bf_search(self, room):
+        # room is the current room number
+        q = [[room]]
+        searching = True
+        while searching:
+            path = q.pop(0)
+            print('path', path)
+            new_room = path[-1]
+            print('new room', new_room)
+            if '?' in self.visited[new_room]:
+                print('path', path)
+                return path
+
+            print('cur room data', self.visited[new_room])
+            for k, v in self.visited[new_room].items():
+                print('value', v)
+                q.append(v)
+
+
+
+
+
+
+
 
 m = Mapping(player)
-print('df output', m.df_traverse())
-print('visited after df traverse', m.visited)
+# print('df output', m.df_traverse())
+dft = m.df_traverse()
+
+m.bf_search(dft)
+# print('visited after df traverse', m.visited)
 
 # TRAVERSAL TEST
 visited_rooms = set()
