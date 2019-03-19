@@ -23,7 +23,7 @@ traversalPath = []
 
 
 
-# world.printRooms()
+world.printRooms()
 
 class Mapping():
     def __init__(self, p):
@@ -37,37 +37,47 @@ class Mapping():
             new_room[item] = '?'
         self.visited[self.player.currentRoom.id] = new_room
 
+    def direction_swap(self, direction):
+        cardinal_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
+        return cardinal_directions[direction]
+
 
     def df_traverse(self):
         searching = True
         prev_room = False
-        for i in range(0, 5):
-        # while searching:
+        exit = None
+        cur_room = self.player.currentRoom.id
+        for i in range(10):
+
             cur_room = self.player.currentRoom.id
-            exit = None
             if cur_room not in self.visited:
                 self.add_room()
-                # print('visited', self.visited)
+
+            if prev_room:
+                # print(f'BEFORE prev room id: {prev_room}, exits: {self.visited[prev_room]}')
+                # print(f'BEFORE cur room id: {cur_room}, exits: {self.visited[cur_room]}')
+                self.visited[cur_room][self.direction_swap(exit)] = prev_room
+                self.visited[prev_room][exit] = cur_room
+
+#                 print(f'AFTER: prev room id: {prev_room}, exits: {self.visited[prev_room]}')
+#                 print(f'AFTER: cur room id: {cur_room}, exits: {self.visited[cur_room]}')
+#                 print('cur room ', cur_room)
 
             for k, v in self.visited[cur_room].items():
                 if v == '?':
                     exit = k
+                    break
                 else:
-                    searching = False
+                    print('current room', cur_room)
                     return cur_room
 
             prev_room = cur_room
+            traversalPath.append(exit)
             self.player.travel(exit)
-            cur_room = self.player.currentRoom.id
-            if cur_room in self.visited:
-                print('in there')
-                print('the door we went through', self.visited[prev_room])
-            else:
-                self.add_room()
 
-            print('room after', self.player.currentRoom.id)
-            # print('visited', self.visited)
-            # print('exit', exit)
+
+
+
 
 
 
