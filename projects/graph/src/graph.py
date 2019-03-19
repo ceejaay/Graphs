@@ -21,22 +21,39 @@ class Graph:
         #         }
         # self.vertices = {}
         self.vertices = {
-                        0: {1, 2},
-                        1: {0, 3, 4},
-                        2: {0, 5, 6},
-                        3: {1, 7, 8},
-                        4: {1, 9, 10},
-                        5: {2, 11, 12},
-                        6: {2, 13, 14},
-                        7: {3},
-                        8:{3},
-                        9: {4},
-                        10: {4},
-                        11: {5},
-                        12: {5},
-                        13: {6},
-                        14: {6}
-                        }
+                            0: [1, 2],
+                            1: [0, 3, 4],
+                            2: [0, 5, 6],
+                            3: [1, 7, 8 ],
+                            4: [1, 9, 10],
+                            5: [2, 11, 12],
+                            6: [2, 13, 14],
+                            7: [3],
+                            8:[3],
+                            9: [4],
+                            10: [4],
+                            11: [5],
+                            12: [5],
+                            13: [6],
+                            14: [6]
+                            }
+        # self.vertices = {
+        #                 0: {1, 2},
+        #                 1: {0, 3, 4},
+        #                 2: {0, 5, 6},
+        #                 3: {1, 7, 8},
+        #                 4: {1, 9, 10},
+        #                 5: {2, 11, 12},
+        #                 6: {2, 13, 14},
+        #                 7: {3},
+        #                 8:{3},
+        #                 9: {4},
+        #                 10: {4},
+        #                 11: {5},
+        #                 12: {5},
+        #                 13: {6},
+        #                 14: {6}
+        #                 }
 
     
     def add_vertex(self, value):
@@ -177,12 +194,14 @@ class Graph:
 
 graph = Graph()  # Instantiate your graph
 print('bf traversal', graph.bf_traverse(0))
-print('bf search for 14', graph.bf_search(0, 14))
+print('bf search for 14', graph.bf_search(0, 12))
+print('bf search for 14', graph.bf_search(0, 7))
 print('bf search for 67', graph.bf_search(0, 67))
 print('bf search for 99', graph.bf_search(0, 99))
 print('df traversal', graph.df_traverse(0)) # yyp
-print('dft recursive', graph.dft_recursive(0))
-print('DF search 14', graph.df_search(0, 14))
+print('dft recursive', graph.dft_recursive(0)) #<= [0, 2, 6, 14, 13, 5, 12, 11, 1, 4, 10, 9, 3, 8, 7]
+print('DF search 12', graph.df_search(0, 12))
+print('DF search 7', graph.df_search(0, 7))
 print('DF search 67', graph.df_search(0, 67))
 print('DF search 99', graph.df_search(0, 99))
 
