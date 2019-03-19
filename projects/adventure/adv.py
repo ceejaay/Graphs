@@ -47,33 +47,42 @@ class Mapping():
         prev_room = False
         exit = None
         cur_room = self.player.currentRoom.id
-        for i in range(10):
+        loop_number = 0
+        # for i in range(10):
+        while searching:
+            loop_number += 1
 
-            cur_room = self.player.currentRoom.id
+            # print(f'prev room {prev_room} cur room {cur_room}, loop {loop_number}')
+            # cur_room = self.player.currentRoom.id
             if cur_room not in self.visited:
                 self.add_room()
 
             if prev_room:
-                # print(f'BEFORE prev room id: {prev_room}, exits: {self.visited[prev_room]}')
-                # print(f'BEFORE cur room id: {cur_room}, exits: {self.visited[cur_room]}')
+                # print(f'prev_room id {prev_room}, cur_room { cur_room } loop {loop_number}')
+                print(f'BEFORE prev room id: {prev_room}, exits: {self.visited[prev_room]}, loop: {loop_number}')
+                print(f'BEFORE cur room id: {cur_room}, exits: {self.visited[cur_room]} loop: {loop_number}')
                 self.visited[cur_room][self.direction_swap(exit)] = prev_room
                 self.visited[prev_room][exit] = cur_room
-
-#                 print(f'AFTER: prev room id: {prev_room}, exits: {self.visited[prev_room]}')
-#                 print(f'AFTER: cur room id: {cur_room}, exits: {self.visited[cur_room]}')
-#                 print('cur room ', cur_room)
+                print(f'AFTER: prev room id: {prev_room}, exits: {self.visited[prev_room]}, loop: {loop_number}')
+                print(f'AFTER: cur room id: {cur_room}, exits: {self.visited[cur_room]}, loop: {loop_number}')
+                # print('cur room ', cur_room)
 
             for k, v in self.visited[cur_room].items():
                 if v == '?':
                     exit = k
-                    break
+                    # break
                 else:
-                    print('current room', cur_room)
+                    # print('current room', cur_room)
+                    searching = False
                     return cur_room
+
 
             prev_room = cur_room
             traversalPath.append(exit)
             self.player.travel(exit)
+            cur_room = self.player.currentRoom.id
+            # print('visited at end', self.visited)
+
 
 
 
