@@ -30,13 +30,16 @@ class Mapping():
         return cardinal_directions[direction]
 
     def take_the_path(self, a):
-        for i in range(0, len(a) - 1):
-            current_room = a[i]
-            next_room = a[i + 1]
-            for key, value in self.visited[current_room].items():
-                if value == next_room:
-                    traversalPath.append(key)
-                    self.player.travel(key)
+        if a == False:
+            print('you should be done')
+        else:
+            for i in range(0, len(a) - 1):
+                current_room = a[i]
+                next_room = a[i + 1]
+                for key, value in self.visited[current_room].items():
+                    if value == next_room:
+                        traversalPath.append(key)
+                        self.player.travel(key)
             # print('cur room', current_room, 'next room ', next_room)
             # print(f'visited item {a[i]} exits: {self.visited[a[i]]}', )
 
@@ -67,28 +70,29 @@ class Mapping():
         # room is the current room number
         q = [[room]]
         searching = True
-        while searching:
-            # print('bf search')
-            # print('q', q)
+        # while len(q) > 0:
+        # while searching:
+        for i in range(20):
             path = q.pop(0)
-            # print('path', path)
+            # print('bf searching 75')
+            print('path', path)
             new_room = path[-1]
+            # print('new room True or False and length of visited', new_room == '?' and len(self.visited) >= len(roomGraph))
+            # print('new room', new_room)
             if new_room == '?':
+                # print('bf searching 79')
+                # print('no ? and in visited')
                 # print('path', path)
                 searching = False
                 path.pop()
                 return path
+            # elif new_room != '?' and len(self.visited) >= len(roomGraph):
+            #     searching = False
             for k, v in self.visited[new_room].items():
                 new_path = list(path)
                 new_path.append(v)
                 q.append(new_path)
-
-
-
-
-
-
-
+        return False
 
 m = Mapping(player)
 # print('df output', m.df_traverse())
@@ -98,6 +102,7 @@ while len(m.visited) < len(roomGraph):
     dft = m.df_traverse()
     print('depth first traversal', dft)
     bf = m.bf_search(dft)
+    print(bf)
     print('breadth first array', bf)
     m.take_the_path(bf)
     print('traversal', traversalPath)
