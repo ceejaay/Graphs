@@ -11,6 +11,7 @@ world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = []
+room_path = []
 world.printRooms()
 
 class Mapping():
@@ -39,6 +40,7 @@ class Mapping():
                 for key, value in self.visited[current_room].items():
                     if value == next_room:
                         traversalPath.append(key)
+                        # room_path.append(value)
                         self.player.travel(key)
             # print('cur room', current_room, 'next room ', next_room)
             # print(f'visited item {a[i]} exits: {self.visited[a[i]]}', )
@@ -63,6 +65,7 @@ class Mapping():
                 return cur_room.id
             prev_room = cur_room
             traversalPath.append(exit)
+            # room_path.append(self.visited[cur_room][exit])
             self.player.travel(exit)
             cur_room = self.player.currentRoom
 
@@ -71,47 +74,53 @@ class Mapping():
         q = [[room]]
         searching = True
         # while len(q) > 0:
-        # while searching:
-        for i in range(20):
+        while searching:
+            # print('queue', q)
+        # for i in range(99):
             path = q.pop(0)
             # print('bf searching 75')
-            print('path', path)
+            # print('path', path)
             new_room = path[-1]
             # print('new room True or False and length of visited', new_room == '?' and len(self.visited) >= len(roomGraph))
             # print('new room', new_room)
+            # print('outside if statement', path)
             if new_room == '?':
                 # print('bf searching 79')
                 # print('no ? and in visited')
-                # print('path', path)
+                # print('inside if statement', path)
                 searching = False
                 path.pop()
                 return path
-            # elif new_room != '?' and len(self.visited) >= len(roomGraph):
-            #     searching = False
+            elif new_room != '?' and len(self.visited) >= len(roomGraph):
+                searching = False
+                return False
             for k, v in self.visited[new_room].items():
-                new_path = list(path)
-                new_path.append(v)
-                q.append(new_path)
-        return False
+                if v not in path:
+                    # print('looking for ?', v)
+                    new_path = list(path)
+                    new_path.append(v)
+                    q.append(new_path)
+        # return False
 
 m = Mapping(player)
 # print('df output', m.df_traverse())
-print('visited len', len(m.visited), 'graph len', len(roomGraph))
+# print('visited len', len(m.visited), 'graph len', len(roomGraph))
 while len(m.visited) < len(roomGraph):
 # for i in range(10):
     dft = m.df_traverse()
-    print('depth first traversal', dft)
+    # print('depth first traversal', dft)
     bf = m.bf_search(dft)
-    print(bf)
-    print('breadth first array', bf)
+    # print(bf)
+    # print('breadth first array', bf)
     m.take_the_path(bf)
-    print('traversal', traversalPath)
-    print('visited len', len(m.visited), 'graph len', len(roomGraph))
+    # print('traversal', traversalPath)
+    # print('visited len', len(m.visited), 'graph len', len(roomGraph))
 
 # print('visited after df traverse', m.visited)
 # m.translate(None)
 
 # TRAVERSAL TEST
+
 visited_rooms = set()
 player.currentRoom = world.startingRoom
 visited_rooms.add(player.currentRoom)
