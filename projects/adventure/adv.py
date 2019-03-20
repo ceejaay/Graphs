@@ -11,7 +11,7 @@ world.loadGraph(roomGraph)
 player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = []
-# world.printRooms()
+world.printRooms()
 
 class Mapping():
     def __init__(self, p):
@@ -28,6 +28,17 @@ class Mapping():
     def direction_swap(self, direction):
         cardinal_directions = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
         return cardinal_directions[direction]
+
+    def take_the_path(self, a):
+        for i in range(0, len(a) - 1):
+            current_room = a[i]
+            next_room = a[i + 1]
+            for key, value in self.visited[current_room].items():
+                if value == next_room:
+                    traversalPath.append(key)
+                    self.player.travel(key)
+            # print('cur room', current_room, 'next room ', next_room)
+            # print(f'visited item {a[i]} exits: {self.visited[a[i]]}', )
 
     def df_traverse(self):
         searching = True
@@ -57,18 +68,20 @@ class Mapping():
         q = [[room]]
         searching = True
         while searching:
+            # print('bf search')
+            # print('q', q)
             path = q.pop(0)
-            print('path', path)
+            # print('path', path)
             new_room = path[-1]
-            print('new room', new_room)
-            if '?' in self.visited[new_room]:
-                print('path', path)
+            if new_room == '?':
+                # print('path', path)
+                searching = False
+                path.pop()
                 return path
-
-            print('cur room data', self.visited[new_room])
             for k, v in self.visited[new_room].items():
-                print('value', v)
-                q.append(v)
+                new_path = list(path)
+                new_path.append(v)
+                q.append(new_path)
 
 
 
@@ -79,10 +92,19 @@ class Mapping():
 
 m = Mapping(player)
 # print('df output', m.df_traverse())
-dft = m.df_traverse()
+print('visited len', len(m.visited), 'graph len', len(roomGraph))
+while len(m.visited) < len(roomGraph):
+# for i in range(10):
+    dft = m.df_traverse()
+    print('depth first traversal', dft)
+    bf = m.bf_search(dft)
+    print('breadth first array', bf)
+    m.take_the_path(bf)
+    print('traversal', traversalPath)
+    print('visited len', len(m.visited), 'graph len', len(roomGraph))
 
-m.bf_search(dft)
 # print('visited after df traverse', m.visited)
+# m.translate(None)
 
 # TRAVERSAL TEST
 visited_rooms = set()
