@@ -1,4 +1,4 @@
-
+import random
 
 class User:
     def __init__(self, name):
@@ -44,6 +44,9 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
+        rand_number = random.randint(1, 10)
+        print(rand_number)
+
         # !!!! IMPLEMENT ME
 
         # Add users
@@ -59,8 +62,17 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
+        q = [[userID]]
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        while len(q) > 0:
+            path = q.pop(0)
+            new_id = path[-1]
+            if new_id not in visited:
+                visited[new_id] = path
+                for item in self.friendships[new_id]:
+                    new_path = list(path)
+                    new_path.append(item)
+                    q.append(new_path)
         return visited
 
 
@@ -70,3 +82,4 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
     print(connections)
+
